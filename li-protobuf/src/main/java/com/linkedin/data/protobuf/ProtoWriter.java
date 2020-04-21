@@ -46,6 +46,7 @@
 
 package com.linkedin.data.protobuf;
 
+import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,7 +56,7 @@ import java.util.function.Function;
 /**
  * Utility class for writing Protocol Buffers encoded binary data.
  */
-public class ProtoWriter
+public class ProtoWriter implements Closeable
 {
   private static final int MAX_VARINT32_SIZE = 5;
   private static final int MAX_VARINT64_SIZE = 10;
@@ -356,5 +357,12 @@ public class ProtoWriter
     {
       throw new EOFException(String.format("Pos: %d, limit: %d, len: %d", _position, _limit, 1));
     }
+  }
+
+  @Override
+  public void close() throws IOException
+  {
+    flush();
+    _out.close();
   }
 }

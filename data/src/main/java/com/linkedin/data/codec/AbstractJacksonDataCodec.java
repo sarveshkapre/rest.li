@@ -248,7 +248,7 @@ public abstract class AbstractJacksonDataCodec implements DataCodec
     protected final JsonGenerator _generator;
     private final boolean _orderMapEntriesByKey;
 
-    protected JacksonTraverseCallback(JsonGenerator generator)
+    public JacksonTraverseCallback(JsonGenerator generator)
     {
       this(generator, false);
     }
