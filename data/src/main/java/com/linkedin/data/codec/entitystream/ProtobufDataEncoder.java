@@ -42,7 +42,6 @@ import java.io.OutputStream;
 public class ProtobufDataEncoder extends AbstractDataEncoder
 {
   private final SymbolTable _symbolTable;
-  private ProtoWriter _writer;
 
   public ProtobufDataEncoder(DataMap dataMap, int bufferSize)
   {
@@ -67,15 +66,8 @@ public class ProtobufDataEncoder extends AbstractDataEncoder
   }
 
   @Override
-  protected Data.TraverseCallback initTraverseCallback(OutputStream out) throws IOException
+  protected Data.TraverseCallback createTraverseCallback(OutputStream out) throws IOException
   {
-    _writer = new ProtoWriter(out);
-    return new ProtobufDataCodec.ProtobufTraverseCallback(_writer, _symbolTable);
-  }
-
-  @Override
-  protected void flushOutputStream(Data.TraverseCallback traverseCallback) throws IOException
-  {
-    _writer.close();
+    return new ProtobufDataCodec.ProtobufTraverseCallback(new ProtoWriter(out), _symbolTable);
   }
 }

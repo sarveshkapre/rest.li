@@ -88,7 +88,7 @@ abstract class AbstractDataEncoder implements DataEncoder
 
     try
     {
-      _traverseCallback = initTraverseCallback(_out);
+      _traverseCallback = createTraverseCallback(_out);
     }
     catch (IOException e)
     {
@@ -96,9 +96,7 @@ abstract class AbstractDataEncoder implements DataEncoder
     }
   }
 
-  abstract protected Data.TraverseCallback initTraverseCallback(OutputStream out) throws IOException;
-
-  abstract protected void flushOutputStream(Data.TraverseCallback traverseCallback) throws IOException;
+  abstract protected Data.TraverseCallback createTraverseCallback(OutputStream out) throws IOException;
 
   /**
    * Pre-process this {@link DataMap} before serializing it.
@@ -205,13 +203,10 @@ abstract class AbstractDataEncoder implements DataEncoder
           }
           else
           {
-            _stack.pop();
-            _typeStack.pop();
-
-            _done = _stack.isEmpty();
+            removeProcessedEntity();
             if (_done)
             {
-              flushOutputStream(_traverseCallback);
+              _traverseCallback.close();
               break;
             }
           }
@@ -226,13 +221,10 @@ abstract class AbstractDataEncoder implements DataEncoder
           }
           else
           {
-            _stack.pop();
-            _typeStack.pop();
-
-            _done = _stack.isEmpty();
+            removeProcessedEntity();
             if (_done)
             {
-              flushOutputStream(_traverseCallback);
+              _traverseCallback.close();
               break;
             }
           }
@@ -258,9 +250,8 @@ abstract class AbstractDataEncoder implements DataEncoder
       }
       else
       {
-        _stack.pop();
         _iteratorStack.pop();
-        Object type = _typeStack.pop();
+        Object type = removeProcessedEntity();
 
         if (type == MAP)
         {
@@ -271,10 +262,9 @@ abstract class AbstractDataEncoder implements DataEncoder
           _traverseCallback.endList();
         }
 
-        _done = _stack.isEmpty();
         if (_done)
         {
-          flushOutputStream(_traverseCallback);
+          _traverseCallback.close();
           break;
         }
       }
@@ -325,12 +315,19 @@ abstract class AbstractDataEncoder implements DataEncoder
     }
   }
 
+  private Object removeProcessedEntity()
+  {
+    _stack.pop();
+    _done = _stack.isEmpty();
+    return _typeStack.pop();
+  }
+
   @Override
   public void onAbort(Throwable e)
   {
     try
     {
-      flushOutputStream(_traverseCallback);
+      _traverseCallback.close();
     }
     catch (IOException ioe)
     {

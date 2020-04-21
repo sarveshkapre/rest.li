@@ -472,5 +472,11 @@ public class ProtobufDataCodec implements DataCodec
       _protoWriter.writeByte(LIST_ORDINAL);
       _protoWriter.writeUInt32(list.size());
     }
+
+    @Override
+    public void close() throws IOException
+    {
+      _protoWriter.close();
+    }
   }
 }

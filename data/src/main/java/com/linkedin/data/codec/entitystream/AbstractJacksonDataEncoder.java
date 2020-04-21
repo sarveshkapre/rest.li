@@ -55,16 +55,10 @@ abstract class AbstractJacksonDataEncoder extends AbstractDataEncoder
   }
 
   @Override
-  protected Data.TraverseCallback initTraverseCallback(OutputStream out) throws IOException
+  protected Data.TraverseCallback createTraverseCallback(OutputStream out) throws IOException
   {
     _generator = _jsonFactory.createGenerator(out);
     return new JacksonStreamTraverseCallback(_generator);
-  }
-
-  @Override
-  protected void flushOutputStream(Data.TraverseCallback traverseCallback) throws IOException
-  {
-    _generator.close();
   }
 
   protected void writeStartObject() throws IOException

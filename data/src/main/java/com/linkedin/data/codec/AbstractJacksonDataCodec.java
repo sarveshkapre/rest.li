@@ -248,7 +248,7 @@ public abstract class AbstractJacksonDataCodec implements DataCodec
     protected final JsonGenerator _generator;
     private final boolean _orderMapEntriesByKey;
 
-    public JacksonTraverseCallback(JsonGenerator generator)
+    protected JacksonTraverseCallback(JsonGenerator generator)
     {
       this(generator, false);
     }
@@ -374,6 +374,12 @@ public abstract class AbstractJacksonDataCodec implements DataCodec
     public void endList() throws IOException
     {
       _generator.writeEndArray();
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+      _generator.close();
     }
   }
 
