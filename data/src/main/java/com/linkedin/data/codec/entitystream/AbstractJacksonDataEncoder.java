@@ -61,38 +61,50 @@ abstract class AbstractJacksonDataEncoder extends AbstractDataEncoder
     return new JacksonStreamTraverseCallback(_generator);
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeStartObject() throws IOException
   {
     _generator.writeStartObject();
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeStartArray() throws IOException
   {
     _generator.writeStartArray();
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeFieldName(String name) throws IOException
   {
     _generator.writeFieldName(name);
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeEndObject() throws IOException
   {
     _generator.writeEndObject();
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeEndArray() throws IOException
   {
     _generator.writeEndArray();
   }
 
+  // method is moved to @Data.TraverseCallback. Extend JacksonStreamTraverseCallback to override method behaviour.
+  @Deprecated
   protected void writeByteString(ByteString value) throws IOException
   {
     char[] charArray = value.asAvroCharArray();
     _generator.writeString(charArray, 0, charArray.length);
   }
 
-  class JacksonStreamTraverseCallback extends AbstractJacksonDataCodec.JacksonTraverseCallback
+  protected class JacksonStreamTraverseCallback extends AbstractJacksonDataCodec.JacksonTraverseCallback
   {
 
     protected JacksonStreamTraverseCallback(JsonGenerator generator)

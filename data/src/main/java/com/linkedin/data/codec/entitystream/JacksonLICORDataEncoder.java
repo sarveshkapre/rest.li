@@ -34,6 +34,7 @@ import java.io.IOException;
  *
  * @author kramgopa
  */
+@SuppressWarnings("deprecation")
 public class JacksonLICORDataEncoder extends AbstractJacksonDataEncoder
 {
   private final SymbolTable _symbolTable;
@@ -60,18 +61,21 @@ public class JacksonLICORDataEncoder extends AbstractJacksonDataEncoder
     _symbolTable = symbolTable;
   }
 
+  @Override
   protected void writeStartObject() throws IOException
   {
     _generator.writeStartArray();
     _generator.writeNumber(JacksonLICORStreamDataCodec.MAP_ORDINAL);
   }
 
+  @Override
   protected void writeStartArray() throws IOException
   {
     _generator.writeStartArray();
     _generator.writeNumber(JacksonLICORStreamDataCodec.LIST_ORDINAL);
   }
 
+  @Override
   protected void writeFieldName(String name) throws IOException
   {
     int fieldId;
@@ -85,6 +89,7 @@ public class JacksonLICORDataEncoder extends AbstractJacksonDataEncoder
     }
   }
 
+  @Override
   protected void writeEndObject() throws IOException
   {
     writeEndArray();

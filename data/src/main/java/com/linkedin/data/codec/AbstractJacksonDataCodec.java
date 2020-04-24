@@ -118,7 +118,6 @@ public abstract class AbstractJacksonDataCodec implements DataCodec
     try (Data.TraverseCallback callback = createTraverseCallback(generator))
     {
       Data.traverse(object, callback);
-      generator.flush();
     }
   }
 
@@ -370,6 +369,7 @@ public abstract class AbstractJacksonDataCodec implements DataCodec
     @Override
     public void close() throws IOException
     {
+      _generator.flush();
       _generator.close();
     }
   }
