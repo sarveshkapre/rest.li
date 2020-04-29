@@ -41,6 +41,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 /**
@@ -48,6 +49,7 @@ import org.testng.annotations.Test;
  *
  * @author Nizar Mankulangara (nmankulangara@linkedin.com)
  */
+@Ignore("This test is flaky in Travis. Increase the number of invocations for #testPutWithoutPrefixAndFilter to reproduce.")
 public class ZooKeeperEphemeralStoreWithFiltersTest
 {
   private ZKConnection _zkClient;
