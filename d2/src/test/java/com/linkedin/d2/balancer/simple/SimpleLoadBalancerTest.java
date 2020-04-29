@@ -78,6 +78,7 @@ import com.linkedin.r2.transport.common.TransportClientFactory;
 import com.linkedin.r2.transport.common.bridge.client.TransportClient;
 import com.linkedin.r2.transport.common.bridge.common.TransportCallback;
 import com.linkedin.r2.util.NamedThreadFactory;
+import com.linkedin.test.util.SingleRetry;
 import com.linkedin.util.degrader.DegraderImpl;
 import java.io.File;
 import java.io.IOException;
@@ -1384,7 +1385,7 @@ public class SimpleLoadBalancerTest
     simulator.reset();
   }
 
-  @Test(groups = { "medium", "back-end" })
+  @Test(groups = { "medium", "back-end" }, retryAnalyzer = SingleRetry.class) // Seems to fail with a ~20% chance
   public void testLoadBalancerSimulationDegraderWithFileStore() throws URISyntaxException,
       IOException,
       ServiceUnavailableException,

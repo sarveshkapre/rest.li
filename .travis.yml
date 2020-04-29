@@ -1,7 +1,6 @@
 language: java
 
-# Skip testing for now, since this is experimental
-script: ./gradlew build -x test
+script: ./gradlew build
 
 jdk:
   - oraclejdk8
