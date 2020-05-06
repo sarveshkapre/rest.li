@@ -73,14 +73,14 @@ record D2Service includes D2ChangeTimeStamps {
    *
    * Required along with D2DegraderProperties for the degrader strategy.
    */
-  loadBalancerStrategyProperties: D2LoadBalancerStrategyProperties
+  loadBalancerStrategyProperties: optional D2LoadBalancerStrategyProperties
 
   /**
    * The degrader properties for this service.
    *
    * Required along with D2DegraderProperties for the degrader strategy.
    */
-  degraderProperties: D2DegraderProperties
+  degraderProperties: optional D2DegraderProperties
 
   /**
    * Properties used for the relative load balancing strategy.
